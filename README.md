@@ -1,2 +1,2 @@
-# svg-rect-to-path
-Converts an SVG rectangle element to a path element.
+# svg-rect-to-polygon
+Converts an SVG rectangle element to a polygon element.
