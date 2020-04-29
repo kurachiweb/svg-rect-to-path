@@ -1,35 +1,35 @@
 <!DOCTYPE html>
 <html lang="ja">
 <!--
-    動作確認済ブラウザ：Chrome, Firefox, Mac Safari それぞれの最新版
+    Compatible with: Chrome, Firefox, Mac Safari latest version of each.
     License: Apache License 2.0
 -->
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SVGのrectをpolygonやpathに変換</title>
-    <meta name="description" content="Illustratorで描いた長方形はrect要素として出力されます。デメリットは、transformをアニメーションさせたい時にtransform属性の内容を保持しないといけないことです。この変換ツールは、rect要素をtransform属性の必要ないpolygon要素やpath要素に変換します。">
+    <title>svg-other-than-rect</title>
+    <meta name="description" content="Converts an SVG rectangle element to a polygon element.">
     <link rel="stylesheet" href="style/style.min.css">
     <script src="script/script.min.js" defer></script>
 </head>
 
 <body>
-    <textarea id="input" autofocus placeholder="rect要素のコードを貼り付け。x, y, width, height属性が必須。transformは任意です。"></textarea>
+    <textarea id="input" autofocus placeholder="Paste a rect-element with required attributes(x, y, width, height) and optional attributes(e.g. transform)."></textarea>
     <div class="genOpt">
-        <label>生成要素<select id="selectElem">
-                <option value="path" selected>path要素</option>
-                <option value="polygon">polygon要素</option>
+        <label>Generate Elem<select id="selectElem">
+                <option value="path" selected>path</option>
+                <option value="polygon">polygon</option>
             </select></label>
-        <label>目的<select id="selectLang">
-                <option value="XML" selected>外部SVGファイルとして</option>
-                <option value="HTML">インラインSVGとして</option>
+        <label>Use for<select id="selectLang">
+                <option value="XML" selected>SVG file</option>
+                <option value="HTML">Inline SVG</option>
             </select></label>
-        <label>座標指定<select id="pointMode">
-                <option value="relative" selected>相対座標</option>
-                <option value="absolute">絶対座標</option>
+        <label>Position<select id="pointMode">
+                <option value="relative" selected>Relative</option>
+                <option value="absolute">Absolute</option>
             </select></label>
-        <label>小数点以下桁数<input type="number" id="decimalLength" value="2"></label>
+        <label>Decimal places<input type="number" id="decimalPlaces" value="2"></label>
     </div>
     <p id="output"></p>
 </body>
