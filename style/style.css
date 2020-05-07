@@ -1,0 +1,46 @@
+:root {
+    background-color: #afe2b7;
+}
+
+body {
+    font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", "Helvetica Neue", Meiryo, "メイリオ", Arial, sans-serif;
+    line-height: 1.875;
+}
+
+.genOpt {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#input {
+    background-color: #f3f9f5;
+    box-sizing: border-box;
+    font-size: 1rem;
+    height: 10rem;
+    line-height: 1.5;
+    padding: 0.125rem 0.25rem;
+    width: 100%;
+    max-width: 100%;
+}
+
+.genOpt>label:not(:first-child) {
+    margin-left: 1.5rem;
+}
+
+#selectElem, #selectLang, #pointMode, #decimalPlaces {
+    background-color: #f3f9f5;
+    font-size: 1rem;
+    margin-left: 0.25rem;
+}
+
+#decimalPlaces {
+    width: 5rem;
+}
+
+#output {
+    background-color: #cef1d5;
+    margin: 1.5rem 0 0;
+    min-height: 1rem;
+    padding: 0.25rem 0.375rem;
+    user-select: all;
+}
