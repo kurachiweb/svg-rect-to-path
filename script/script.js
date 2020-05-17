@@ -21,7 +21,7 @@ const round = (num, precision = 0) => {
 
 // 属性値からtransform前の角座標を求める
 const getCornersXY = attrs => {
-    const val = attr => +attrs[attr].value;
+    const val = attr => attrs[attr] ? +attrs[attr].value : 0;
     const cornerArr = [];
     cornerArr.push([val('x'), val('y')]);
     cornerArr.push([val('x') + val('width'), val('y')]);
@@ -120,7 +120,7 @@ const convertProcess = () => {
     const lang = langSelector.value;
     const pointMode = pModeSelector.value;
     const precision = +decimalElem.value;
-    const requireAttrs = ['x', 'y', 'width', 'height'];
+    const requireAttrs = ['width', 'height'];
     if (!(inputStr && elem && lang && pointMode && !isNaN(precision))) {
         outputElem.textContent = 'Invalid input';
         return false;
@@ -137,7 +137,7 @@ const convertProcess = () => {
     const cornersXY = getCornersXY(parsedElemAttrs);
     const DOMTf = new DOMTransformer(parsedElem.transform.baseVal);
     const transformedP = cornersXY.map(eachCorner => DOMTf.applyXY(...eachCorner));
-    const attrsHTML = attrsToHTML(parsedElemAttrs, { ignore: [...requireAttrs, 'transform'] });
+    const attrsHTML = attrsToHTML(parsedElemAttrs, { ignore: [...requireAttrs, 'x', 'y', 'transform'] });
 
     let pointValue = '';
     if (elem === 'path') {
