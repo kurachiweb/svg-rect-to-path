@@ -16,22 +16,23 @@
 
 <body>
     <textarea id="input" autofocus placeholder="Paste a rect-element with required attributes(x, y, width, height) and optional attributes(e.g. transform)."></textarea>
-    <div class="genOpt">
-        <label>Generate Elem<select id="selectElem">
+    <div class="gen_opt">
+        <label>Generate Elem<select id="select_elem">
                 <option value="path" selected>path</option>
                 <option value="polygon">polygon</option>
             </select></label>
-        <label>Use for<select id="selectLang">
+        <label>Use for<select id="select_lang">
                 <option value="XML" selected>SVG file</option>
                 <option value="HTML">Inline SVG</option>
             </select></label>
-        <label>Position<select id="pointMode">
+        <label>Position<select id="point_mode">
                 <option value="relative" selected>Relative</option>
                 <option value="absolute">Absolute</option>
             </select></label>
-        <label>Decimal places<input type="number" id="decimalPlaces" value="2"></label>
+        <label>Decimal places<input type="number" id="decimal_places" value="2"></label>
     </div>
     <p id="output"></p>
+    <p><a href="https://github.com/kurachiweb/svg-rect-to-path" target="_blank" rel="noopener" id="fork_GH">Fork me on GitHub</a></p>
 </body>
 
 </html>

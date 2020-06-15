@@ -1,8 +1,8 @@
 const inputElem = document.getElementById('input');
-const elemSelector = document.getElementById('selectElem');
-const langSelector = document.getElementById('selectLang');
-const pModeSelector = document.getElementById('pointMode');
-const decimalElem = document.getElementById('decimalPlaces');
+const elemSelector = document.getElementById('select_elem');
+const langSelector = document.getElementById('select_lang');
+const pModeSelector = document.getElementById('point_mode');
+const decimalElem = document.getElementById('decimal_places');
 const outputElem = document.getElementById('output');
 
 // 丸め誤差を考慮して丸める
@@ -47,10 +47,10 @@ const DOMTransformer = function (TfList) {
 };
 
 // rect要素のouterHTMLを点の座標データにする
-const getParsedElem = (elemHtmlVal, elemName) => {
+const getParsedElems = (elemHtmlVal, elemName) => {
     const parsedDoc = new DOMParser().parseFromString('<svg xmlns="http://www.w3.org/2000/svg">' + elemHtmlVal + '</svg>', 'image/svg+xml');
-    const isDOMVaild = parsedDoc.getElementsByTagNameNS('http://www.w3.org/2000/svg', elemName)[0];
-    return isDOMVaild || false;
+    const isDOMVaild = parsedDoc.getElementsByTagNameNS('http://www.w3.org/2000/svg', elemName);
+    return isDOMVaild.length ? [...isDOMVaild] : false;
 };
 
 const attrsToHTML = (attrs, rule = {}) => {
@@ -116,40 +116,48 @@ const convertPolygonValue = (pointArrs, precision = 2) => {
 // 必要なデータを取得し、関数を逐次実行する
 const convertProcess = () => {
     const inputStr = inputElem.value;
-    const elem = elemSelector.value;
+    const elemName = elemSelector.value;
     const lang = langSelector.value;
     const pointMode = pModeSelector.value;
     const precision = +decimalElem.value;
     const requireAttrs = ['width', 'height'];
-    if (!(inputStr && elem && lang && pointMode && !isNaN(precision))) {
+    if (!(inputStr && elemName && lang && pointMode && !isNaN(precision))) {
         outputElem.textContent = 'Invalid input';
         return false;
     }
 
-    const parsedElem = getParsedElem(inputStr, 'rect');
-    const parsedElemAttrs = parsedElem ? parsedElem.attributes : {};
-    const isVaildAttr = requireAttrs.every(attr => parsedElemAttrs[attr]);
-    if (!isVaildAttr) {
-        outputElem.textContent = 'Invalid input';
-        return false;
+    const genOutputValue = elem => {
+        let outputValue = '';
+        const parsedElemAttrs = elem ? elem.attributes : {};
+        const isVaildAttr = requireAttrs.every(attr => parsedElemAttrs[attr]);
+        if (!isVaildAttr) {
+            outputElem.textContent = 'Invalid input';
+            return false;
+        }
+
+        const cornersXY = getCornersXY(parsedElemAttrs);
+        const DOMTf = new DOMTransformer(elem.transform.baseVal);
+        const transformedP = cornersXY.map(eachCorner => DOMTf.applyXY(...eachCorner));
+        const attrsHTML = attrsToHTML(parsedElemAttrs, { ignore: [...requireAttrs, 'x', 'y', 'transform'] });
+
+        let pointValue = '';
+        if (elemName === 'path') {
+            pModeSelector.disabled = false;
+            pointValue = convertPathValue(transformedP, precision, pointMode);
+            outputValue = `<path d="${pointValue}"${attrsHTML}${lang === 'XML' ? ' /' : ''}>`;
+        } else {
+            pModeSelector.disabled = true;
+            pModeSelector.value = 'relative';
+            pointValue = convertPolygonValue(transformedP, precision);
+            outputValue = `<polygon points="${pointValue}"${attrsHTML}${lang === 'XML' ? ' /' : ''}>`;
+        }
+
+        return outputValue;
     }
 
-    const cornersXY = getCornersXY(parsedElemAttrs);
-    const DOMTf = new DOMTransformer(parsedElem.transform.baseVal);
-    const transformedP = cornersXY.map(eachCorner => DOMTf.applyXY(...eachCorner));
-    const attrsHTML = attrsToHTML(parsedElemAttrs, { ignore: [...requireAttrs, 'x', 'y', 'transform'] });
-
-    let pointValue = '';
-    if (elem === 'path') {
-        pModeSelector.disabled = false;
-        pointValue = convertPathValue(transformedP, precision, pointMode);
-        outputElem.textContent = `<path d="${pointValue}"${attrsHTML}${lang === 'XML' ? ' /' : ''}>`;
-    } else {
-        pModeSelector.disabled = true;
-        pModeSelector.value = 'relative';
-        pointValue = convertPolygonValue(transformedP, precision);
-        outputElem.textContent = `<polygon points="${pointValue}"${attrsHTML}${lang === 'XML' ? ' /' : ''}>`;
-    }
+    const parsedElems = getParsedElems(inputStr, 'rect');
+    const outputValue = parsedElems.map(genOutputValue).join('\n');
+    outputElem.textContent = outputValue;
 };
 
 inputElem.addEventListener('input', convertProcess);

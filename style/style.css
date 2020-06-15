@@ -3,11 +3,12 @@
 }
 
 body {
+    color: #102713;
     font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", "Helvetica Neue", Meiryo, "メイリオ", Arial, sans-serif;
     line-height: 1.875;
 }
 
-.genOpt {
+.gen_opt {
     display: flex;
     flex-wrap: wrap;
 }
@@ -23,24 +24,37 @@ body {
     max-width: 100%;
 }
 
-.genOpt>label:not(:first-child) {
+.gen_opt>label:not(:first-child) {
     margin-left: 1.5rem;
 }
 
-#selectElem, #selectLang, #pointMode, #decimalPlaces {
+#select_elem, #select_lang, #point_mode, #decimal_places {
     background-color: #f3f9f5;
     font-size: 1rem;
     margin-left: 0.25rem;
 }
 
-#decimalPlaces {
+#decimal_places {
+    border-width: 1px;
     width: 5rem;
 }
 
 #output {
     background-color: #cef1d5;
-    margin: 1.5rem 0 0;
-    min-height: 1rem;
+    margin: 1.5rem 0 2.5rem;
     padding: 0.25rem 0.375rem;
+    min-height: 1rem;
     user-select: all;
+    white-space: pre-wrap;
+}
+
+#fork_GH {
+    background-color: #76bf80;
+    color: inherit;
+    padding: 0.5rem 0.625rem;
+    text-decoration: none;
+}
+
+#fork_GH:hover {
+    background-color: #61a76b;
 }
