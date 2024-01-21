@@ -2,4 +2,6 @@
 	import '../app.pcss';
 </script>
 
-<slot />
+<div class="p-4 text-lg">
+	<slot />
+</div>
