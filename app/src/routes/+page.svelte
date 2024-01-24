@@ -103,7 +103,7 @@
 	{/each}
 </div>
 
-<div class={outputSVG && 'border-primary-600 rounded-xl border-4 p-1'}>
+<div class="mb-8 {outputSVG && 'border-primary-600 rounded-xl border-4 p-1'}">
 	<Textarea
 		bind:value={outputSVG}
 		readonly
@@ -137,4 +137,23 @@
 			{/if}
 		</div>
 	</Textarea>
+</div>
+
+<p class="mb-2">
+	This application is using <a
+		href="https://svelte.dev/"
+		target="_blank"
+		class="text-primary-800 underline">Svelte</a
+	>,
+	<a href="https://kit.svelte.dev/" target="_blank" class="text-primary-800 underline">SvelteKit</a
+	>,
+	<a href="https://flowbite-svelte.com/" target="_blank" class="text-primary-800 underline"
+		>Flowbite</a
+	>
+</p>
+<div class="flex flex-wrap items-center gap-2">
+	<p>2020-2024 @KurachiWeb</p>
+	<Button color="dark" size="sm" href="https://github.com/kurachiweb/svg-rect-to-path">
+		Fork me on GitHub
+	</Button>
 </div>
