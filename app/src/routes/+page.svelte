@@ -32,6 +32,11 @@
 	$: {
 		outputSVG = convertSVGElements(inputSVG, outputElem, coordMode, decimalPrecision);
 	}
+
+	function setSampleCode() {
+		inputSVG = `<rect x="387.4" y="332.4" width="4" height="40" transform="translate(-97.1 154.4) rotate(-20)" fill="#afe2b7" class="decoration" />
+<rect x="10" y="85" transform="matrix(0.7837 -0.6211 0.6211 0.7837 -44.3907 110.5272)" fill="#D16B6B" width="253" height="68"/>`;
+	}
 </script>
 
 <h1 class="text-4xl font-bold">SVG rect to path</h1>
@@ -41,7 +46,11 @@
 </p>
 
 <div class="mb-2">
-	<Textarea bind:value={inputSVG} rows="8" placeholder="Paste here." class="border-primary-600" />
+	<Textarea bind:value={inputSVG} rows="6" placeholder="Paste here." class="border-primary-600">
+		<div slot="footer">
+			<Button color="light" size="xs" on:click={setSampleCode}>Set sample SVG</Button>
+		</div>
+	</Textarea>
 </div>
 <div class="mb-8 flex flex-wrap gap-8">
 	<div>
@@ -91,7 +100,7 @@
 	<Textarea
 		bind:value={outputSVG}
 		readonly
-		rows="12"
+		rows="6"
 		class="border-primary-600 block"
 		placeholder="Output."
 	/>
