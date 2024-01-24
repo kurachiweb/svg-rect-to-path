@@ -1,5 +1,6 @@
 <script>
 	import { Button, Textarea } from 'flowbite-svelte';
+	import { convertSVGElements } from '$lib/index';
 
 	const outputElemSelects = [
 		{ value: 'path', label: '<path>' },
@@ -18,10 +19,19 @@
 
 	let outputElem = outputElemSelects[0].value;
 	let coordMode = coordModeSelects[0].value;
-	let decimalPrecision = decimalPrecisionSelects[0].value;
+	let decimalPrecision = 2; // 0.0x
 	let inputSVG = '';
 
 	let outputSVG = '';
+
+	$: if (outputElem === 'polygon') {
+		// If polygon, this application only support 'relative'.
+		coordMode = 'relative';
+	}
+
+	$: {
+		outputSVG = convertSVGElements(inputSVG, outputElem, coordMode, decimalPrecision);
+	}
 </script>
 
 <h1 class="text-4xl font-bold">SVG rect to path</h1>
@@ -54,6 +64,7 @@
 			{#each coordModeSelects as mode}
 				<Button
 					color={coordMode === mode.value ? 'primary' : 'light'}
+					disabled={outputElem === 'polygon'}
 					class="text-lg"
 					on:click={() => (coordMode = mode.value)}
 				>
