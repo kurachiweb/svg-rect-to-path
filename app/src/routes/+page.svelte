@@ -1,5 +1,7 @@
 <script>
-	import { Button, Textarea } from 'flowbite-svelte';
+	import { fade } from 'svelte/transition';
+	import { Button, Textarea, Toast } from 'flowbite-svelte';
+	import { CheckCircleSolid, CloseCircleSolid } from 'flowbite-svelte-icons';
 	import { convertSVGElements } from '$lib/index';
 
 	const outputElemSelects = [
@@ -22,20 +24,25 @@
 	let decimalPrecision = 2; // 0.0x
 	let inputSVG = '';
 
-	let outputSVG = '';
-
 	$: if (outputElem === 'polygon') {
 		// If polygon, this application only support 'relative'.
 		coordMode = 'relative';
 	}
 
-	$: {
-		outputSVG = convertSVGElements(inputSVG, outputElem, coordMode, decimalPrecision);
-	}
+	$: outputSVG = convertSVGElements(inputSVG, outputElem, coordMode, decimalPrecision);
 
 	function setSampleCode() {
 		inputSVG = `<rect x="387.4" y="332.4" width="4" height="40" transform="translate(-97.1 154.4) rotate(-20)" fill="#afe2b7" class="decoration" />
 <rect x="10" y="85" transform="matrix(0.7837 -0.6211 0.6211 0.7837 -44.3907 110.5272)" fill="#D16B6B" width="253" height="68"/>`;
+	}
+
+	let isCopySuccess = false;
+	let isCopyFail = false;
+	function copyOutput() {
+		navigator.clipboard
+			.writeText(outputSVG)
+			.then(() => (isCopySuccess = true))
+			.catch(() => (isCopyFail = true));
 	}
 </script>
 
@@ -103,5 +110,31 @@
 		rows="6"
 		class="border-primary-600 block"
 		placeholder="Output."
-	/>
+	>
+		<div slot="footer" class="flex flex-wrap gap-x-4 gap-y-2">
+			<Button color="primary" disabled={!outputSVG} size="sm" on:click={copyOutput}>Copy SVG</Button
+			>
+			{#if isCopySuccess}
+				<div in:fade out:fade={{ delay: 4000 }} on:introend={() => (isCopySuccess = false)}>
+					<Toast color="green" dismissable={false} class="p-1 pr-3">
+						<svelte:fragment slot="icon">
+							<CheckCircleSolid class="h-5 w-5" />
+							<span class="sr-only">Check icon</span>
+						</svelte:fragment>
+						Successfully copied.
+					</Toast>
+				</div>
+			{:else if isCopyFail}
+				<div in:fade out:fade={{ delay: 4000 }} on:introend={() => (isCopyFail = false)}>
+					<Toast color="red" dismissable={false} class="p-1 pr-3">
+						<svelte:fragment slot="icon">
+							<CloseCircleSolid class="h-5 w-5" />
+							<span class="sr-only">Error icon</span>
+						</svelte:fragment>
+						Sorry, Failed to copy. Please try it self.
+					</Toast>
+				</div>
+			{/if}
+		</div>
+	</Textarea>
 </div>
