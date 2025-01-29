@@ -53,7 +53,7 @@
 </p>
 
 <div class="mb-2">
-	<Textarea bind:value={inputSVG} rows="6" placeholder="Paste here." class="border-primary-600">
+	<Textarea bind:value={inputSVG} rows={6} placeholder="Paste here" class="border-primary-600">
 		<div slot="footer">
 			<Button color="light" size="xs" on:click={setSampleCode}>Set sample SVG</Button>
 		</div>
@@ -103,13 +103,13 @@
 	{/each}
 </div>
 
-<div class="mb-8 {outputSVG && 'border-primary-600 rounded-xl border-4 p-1'}">
+<div class="mb-8 {outputSVG && 'rounded-xl border-4 border-primary-600 p-1'}">
 	<Textarea
 		bind:value={outputSVG}
 		readonly
-		rows="6"
-		class="border-primary-600 block"
-		placeholder="Output."
+		rows={6}
+		class="block border-primary-600"
+		placeholder="Output"
 	>
 		<div slot="footer" class="flex flex-wrap gap-x-4 gap-y-2">
 			<Button color="primary" disabled={!outputSVG} size="sm" on:click={copyOutput}>Copy SVG</Button
@@ -152,7 +152,7 @@
 	>
 </p>
 <div class="flex flex-wrap items-center gap-2">
-	<p>2020-2024 @KurachiWeb</p>
+	<p>2020-{new Date().getFullYear()} @KurachiWeb</p>
 	<Button color="dark" size="sm" href="https://github.com/kurachiweb/svg-rect-to-path">
 		Fork me on GitHub
 	</Button>
