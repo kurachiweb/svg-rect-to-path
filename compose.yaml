@@ -1,0 +1,32 @@
+services:
+  service-frontend:
+    env_file: .env
+    build:
+      dockerfile: ./Dockerfile
+    tty: true
+    ports:
+      - ${PORT_SERVICE_FRONTEND_BUILD}:3000 # for build
+      - ${PORT_SERVICE_FRONTEND_DEV}:5173 # for dev
+    networks:
+      - external
+      - internal
+    volumes:
+      - type: bind
+        source: ./
+        target: /home/node
+      - type: volume
+        source: service-frontend-module
+        target: /home/node/node_modules
+      - type: volume
+        source: service-frontend-output
+        target: /home/node/.svelte-kit
+networks:
+  external:
+    driver: bridge
+    internal: false
+  internal:
+    driver: bridge
+    internal: true
+volumes:
+  service-frontend-module:
+  service-frontend-output:
