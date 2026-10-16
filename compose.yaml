@@ -14,13 +14,16 @@ services:
     volumes:
       - type: bind
         source: ./
-        target: /home/node
+        target: /home/node/app
       - type: volume
         source: frontend-module
-        target: /home/node/node_modules
+        target: /home/node/app/node_modules
       - type: volume
         source: frontend-output
-        target: /home/node/.svelte-kit
+        target: /home/node/app/.svelte-kit
+      - type: volume
+        source: claude-config
+        target: /home/node/.claude
 networks:
   external:
     driver: bridge
@@ -31,3 +34,4 @@ networks:
 volumes:
   frontend-module:
   frontend-output:
+  claude-config:
