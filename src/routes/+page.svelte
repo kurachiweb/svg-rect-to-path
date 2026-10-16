@@ -2,7 +2,7 @@
 	import { fade } from 'svelte/transition';
 	import { Button, Textarea, Toast } from 'flowbite-svelte';
 	import { CheckCircleSolid, CloseCircleSolid } from 'flowbite-svelte-icons';
-	import { convertSVGElements } from '$lib/index';
+	import { convertSVGElements } from '#lib';
 
 	const outputElemSelects = [
 		{ value: 'path', label: '<path>' },

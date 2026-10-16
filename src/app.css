@@ -1,0 +1,24 @@
+@import 'tailwindcss';
+
+@plugin 'flowbite/plugin';
+
+/* Toggle dark mode with the `dark` class instead of `prefers-color-scheme` */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Tailwind ignores node_modules by default, so register the component libraries explicitly */
+@source '../node_modules/flowbite-svelte/dist';
+@source '../node_modules/flowbite-svelte-icons/dist';
+
+@theme {
+	/* flowbite-svelte */
+	--color-primary-50: #f7fee7;
+	--color-primary-100: #ecfccb;
+	--color-primary-200: #d9f99d;
+	--color-primary-300: #bef264;
+	--color-primary-400: #a3e635;
+	--color-primary-500: #84cc16;
+	--color-primary-600: #65a30d;
+	--color-primary-700: #4d7c0f;
+	--color-primary-800: #3f6212;
+	--color-primary-900: #365314;
+}
