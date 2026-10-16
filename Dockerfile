@@ -1,5 +1,5 @@
-# Ubuntu Node.js
-FROM node:26.5.0
+# Debian 13(trixie)がベース
+FROM node:26.12.0-trixie-slim
 
 WORKDIR /home/node
 
