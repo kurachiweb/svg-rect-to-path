@@ -151,7 +151,10 @@
 		target="_blank"
 		class="text-primary-800 underline">Svelte</a
 	>,
-	<a href="https://kit.svelte.dev/" target="_blank" class="text-primary-800 underline">SvelteKit</a
+	<a
+		href="https://svelte.jp/docs/kit/introduction"
+		target="_blank"
+		class="text-primary-800 underline">SvelteKit</a
 	>,
 	<a href="https://flowbite-svelte.com/" target="_blank" class="text-primary-800 underline"
 		>Flowbite</a
