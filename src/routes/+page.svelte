@@ -29,8 +29,8 @@
 	function selectOutputElem(value: string) {
 		outputElem = value;
 		if (value === 'polygon') {
-			// If polygon, this application only support 'relative'.
-			coordMode = 'relative';
+			// <polygon> points can only express absolute coordinates.
+			coordMode = 'absolute';
 		}
 	}
 
