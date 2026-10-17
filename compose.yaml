@@ -1,25 +1,29 @@
+name: svg-rect-to-path
 services:
-  service-frontend:
+  frontend:
     env_file: .env
     build:
       dockerfile: ./Dockerfile
     tty: true
     ports:
-      - ${PORT_SERVICE_FRONTEND_BUILD}:3000 # for build
-      - ${PORT_SERVICE_FRONTEND_DEV}:5173 # for dev
+      - ${PORT_FRONTEND_DEV}:5173 # for dev
+      - ${PORT_FRONTEND_BUILD}:3000 # for build
     networks:
       - external
       - internal
     volumes:
       - type: bind
         source: ./
-        target: /home/node
+        target: /home/node/app
       - type: volume
-        source: service-frontend-module
-        target: /home/node/node_modules
+        source: frontend-module
+        target: /home/node/app/node_modules
       - type: volume
-        source: service-frontend-output
-        target: /home/node/.svelte-kit
+        source: frontend-output
+        target: /home/node/app/.svelte-kit
+      - type: volume
+        source: claude-config
+        target: /home/node/.claude
 networks:
   external:
     driver: bridge
@@ -28,5 +32,6 @@ networks:
     driver: bridge
     internal: true
 volumes:
-  service-frontend-module:
-  service-frontend-output:
+  frontend-module:
+  frontend-output:
+  claude-config:
